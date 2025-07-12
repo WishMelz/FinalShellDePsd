@@ -1,0 +1,284 @@
+* {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+                color: #333;
+            }
+
+            .decrypt-container {
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                border-radius: 20px;
+                padding: 40px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 500px;
+                text-align: center;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                margin-bottom: 30px;
+            }
+
+            .lock-icon {
+                font-size: 3rem;
+                margin-bottom: 20px;
+                color: #667eea;
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.05);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+
+            h1 {
+                color: #2c3e50;
+                margin-bottom: 30px;
+                font-size: 2rem;
+                font-weight: 700;
+            }
+
+            #passwordInput {
+                width: 100%;
+                padding: 16px 20px;
+                border: 2px solid #e0e0e0;
+                border-radius: 12px;
+                font-size: 1.1rem;
+                text-align: center;
+                background: rgba(255, 255, 255, 0.9);
+                transition: all 0.3s ease;
+                outline: none;
+                margin-bottom: 30px;
+            }
+
+            #passwordInput:focus {
+                border-color: #667eea;
+                box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+                transform: translateY(-2px);
+            }
+
+            #passwordInput::placeholder {
+                color: #bdc3c7;
+            }
+
+            .status-container {
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+            #errorText {
+                color: #e74c3c;
+                font-weight: 500;
+                padding: 12px 20px;
+                border-radius: 8px;
+                background: rgba(231, 76, 60, 0.1);
+                border: 1px solid rgba(231, 76, 60, 0.2);
+                animation: shake 0.5s ease-in-out;
+                transition: all 0.3s ease;
+            }
+
+            #result {
+                color: #27ae60;
+                font-weight: 500;
+                padding: 12px 20px;
+                border-radius: 8px;
+                background: rgba(39, 174, 96, 0.1);
+                border: 1px solid rgba(39, 174, 96, 0.2);
+                animation: slideIn 0.5s ease-out;
+                word-break: break-all;
+                max-height: 200px;
+                overflow-y: auto;
+                transition: all 0.3s ease;
+            }
+
+            .hidden {
+                display: none !important;
+            }
+
+            @keyframes shake {
+                0%,
+                100% {
+                    transform: translateX(0);
+                }
+                25% {
+                    transform: translateX(-5px);
+                }
+                75% {
+                    transform: translateX(5px);
+                }
+            }
+
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .security-info {
+                margin-top: 30px;
+                padding: 20px;
+                background: rgba(102, 126, 234, 0.1);
+                border-radius: 12px;
+                border: 1px solid rgba(102, 126, 234, 0.2);
+            }
+
+            .security-info h3 {
+                color: #667eea;
+                margin-bottom: 10px;
+                font-size: 1.1rem;
+            }
+
+            .security-info p {
+                color: #7f8c8d;
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+
+            /* Footer 样式 */
+            .site-footer {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border-radius: 15px;
+                padding: 20px 30px;
+                /* margin-top: auto; */
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 500px;
+            }
+
+            .footer-content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 15px;
+                font-size: 0.9rem;
+                color: rgba(255, 255, 255, 0.9);
+            }
+
+            .brand {
+                font-weight: 600;
+                color: #fff;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            }
+
+            .divider {
+                color: rgba(255, 255, 255, 0.6);
+                font-weight: 300;
+                user-select: none;
+            }
+
+            .github-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                color: rgba(255, 255, 255, 0.9);
+                text-decoration: none;
+                padding: 8px 12px;
+                border-radius: 8px;
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                transition: all 0.3s ease;
+                font-size: 0.85rem;
+            }
+
+            .github-link:hover {
+                background: rgba(255, 255, 255, 0.2);
+                border-color: rgba(255, 255, 255, 0.3);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                color: #fff;
+            }
+
+            .github-icon {
+                width: 16px;
+                height: 16px;
+                transition: transform 0.2s ease;
+            }
+
+            .github-link:hover .github-icon {
+                transform: scale(1.1);
+            }
+
+            .github-text {
+                font-weight: 500;
+            }
+
+            .powered-by {
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 0.85rem;
+                font-style: italic;
+            }
+
+            @media (max-width: 600px) {
+                .decrypt-container {
+                    padding: 30px 20px;
+                    margin: 10px;
+                }
+
+                h1 {
+                    font-size: 1.6rem;
+                }
+
+                .site-footer {
+                    padding: 15px 20px;
+                    margin: 10px;
+                }
+
+                .footer-content {
+                    gap: 10px;
+                    font-size: 0.8rem;
+                }
+
+                .github-link {
+                    padding: 6px 10px;
+                    font-size: 0.8rem;
+                }
+
+                .github-icon {
+                    width: 14px;
+                    height: 14px;
+                }
+
+                .powered-by {
+                    font-size: 0.75rem;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .footer-content {
+                    flex-direction: column;
+                    gap: 8px;
+                    text-align: center;
+                }
+
+                .divider {
+                    display: none;
+                }
+            }
