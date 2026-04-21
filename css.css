@@ -1,284 +1,405 @@
+/* 设计令牌：深蓝底 + 青色强调，偏工具/安全类界面 */
+:root {
+    --bg-0: #070b14;
+    --bg-1: #0c1526;
+    --bg-2: #0f2847;
+    --accent: #2dd4bf;
+    --accent-hover: #5eead4;
+    --accent-muted: rgba(45, 212, 191, 0.14);
+    --accent-border: rgba(45, 212, 191, 0.35);
+    --surface: rgba(248, 250, 252, 0.98);
+    --surface-elevated: #ffffff;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --text-subtle: #94a3b8;
+    --border-input: #e2e8f0;
+    --success: #059669;
+    --success-bg: rgba(5, 150, 105, 0.09);
+    --success-border: rgba(5, 150, 105, 0.22);
+    --error: #dc2626;
+    --error-bg: rgba(220, 38, 38, 0.08);
+    --error-border: rgba(220, 38, 38, 0.22);
+    --shadow-card: 0 4px 6px -1px rgba(15, 23, 42, 0.06),
+        0 24px 48px -12px rgba(15, 23, 42, 0.28);
+    --shadow-glow: 0 0 0 1px rgba(45, 212, 191, 0.12),
+        0 0 40px -8px rgba(45, 212, 191, 0.25);
+    --radius-lg: 20px;
+    --radius-md: 12px;
+    --radius-sm: 10px;
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 1.25rem;
+    --space-lg: 1.75rem;
+    --space-xl: 2.25rem;
+    --font-sans: "Segoe UI", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB",
+        system-ui, sans-serif;
+}
+
 * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-            }
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-            body {
-                font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                padding: 20px;
-                color: #333;
-            }
+body {
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    color: var(--text);
+    background-color: var(--bg-0);
+    background-image: radial-gradient(
+            ellipse 120% 80% at 50% -20%,
+            rgba(45, 212, 191, 0.12),
+            transparent 50%
+        ),
+        linear-gradient(165deg, var(--bg-1) 0%, var(--bg-0) 45%, #050810 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 2rem);
+    -webkit-font-smoothing: antialiased;
+}
 
-            .decrypt-container {
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(10px);
-                border-radius: 20px;
-                padding: 40px;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-                width: 100%;
-                max-width: 500px;
-                text-align: center;
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                margin-bottom: 30px;
-            }
+/* 背景细网格，增加层次且不抢眼 */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: linear-gradient(
+            rgba(148, 163, 184, 0.04) 1px,
+            transparent 1px
+        ),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+}
 
-            .lock-icon {
-                font-size: 3rem;
-                margin-bottom: 20px;
-                color: #667eea;
-                animation: pulse 2s infinite;
-            }
+.page-shell {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-md);
+}
 
-            @keyframes pulse {
-                0% {
-                    transform: scale(1);
-                }
-                50% {
-                    transform: scale(1.05);
-                }
-                100% {
-                    transform: scale(1);
-                }
-            }
+.decrypt-container {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl) var(--space-lg);
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    text-align: left;
+}
 
-            h1 {
-                color: #2c3e50;
-                margin-bottom: 30px;
-                font-size: 2rem;
-                font-weight: 700;
-            }
+.card-header {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
 
-            #passwordInput {
-                width: 100%;
-                padding: 16px 20px;
-                border: 2px solid #e0e0e0;
-                border-radius: 12px;
-                font-size: 1.1rem;
-                text-align: center;
-                background: rgba(255, 255, 255, 0.9);
-                transition: all 0.3s ease;
-                outline: none;
-                margin-bottom: 30px;
-            }
+.lock-icon {
+    font-size: 2.75rem;
+    line-height: 1;
+    margin-bottom: var(--space-sm);
+    filter: drop-shadow(0 2px 8px rgba(45, 212, 191, 0.35));
+    animation: float-soft 4s ease-in-out infinite;
+}
 
-            #passwordInput:focus {
-                border-color: #667eea;
-                box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
-                transform: translateY(-2px);
-            }
+@keyframes float-soft {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
 
-            #passwordInput::placeholder {
-                color: #bdc3c7;
-            }
+h1 {
+    color: var(--text);
+    font-size: clamp(1.35rem, 4vw, 1.65rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    margin-bottom: var(--space-xs);
+}
 
-            .status-container {
-                min-height: 60px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-bottom: 20px;
-            }
+.card-subtitle {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    line-height: 1.5;
+}
 
-            #errorText {
-                color: #e74c3c;
-                font-weight: 500;
-                padding: 12px 20px;
-                border-radius: 8px;
-                background: rgba(231, 76, 60, 0.1);
-                border: 1px solid rgba(231, 76, 60, 0.2);
-                animation: shake 0.5s ease-in-out;
-                transition: all 0.3s ease;
-            }
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
 
-            #result {
-                color: #27ae60;
-                font-weight: 500;
-                padding: 12px 20px;
-                border-radius: 8px;
-                background: rgba(39, 174, 96, 0.1);
-                border: 1px solid rgba(39, 174, 96, 0.2);
-                animation: slideIn 0.5s ease-out;
-                word-break: break-all;
-                max-height: 200px;
-                overflow-y: auto;
-                transition: all 0.3s ease;
-            }
+#passwordInput {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border-input);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    text-align: left;
+    background: var(--surface-elevated);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+    margin-bottom: var(--space-md);
+    color: var(--text);
+}
 
-            .hidden {
-                display: none !important;
-            }
+#passwordInput:hover {
+    border-color: #cbd5e1;
+}
 
-            @keyframes shake {
-                0%,
-                100% {
-                    transform: translateX(0);
-                }
-                25% {
-                    transform: translateX(-5px);
-                }
-                75% {
-                    transform: translateX(5px);
-                }
-            }
+#passwordInput:focus {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-glow);
+}
 
-            @keyframes slideIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
+#passwordInput::placeholder {
+    color: var(--text-subtle);
+}
 
-            .security-info {
-                margin-top: 30px;
-                padding: 20px;
-                background: rgba(102, 126, 234, 0.1);
-                border-radius: 12px;
-                border: 1px solid rgba(102, 126, 234, 0.2);
-            }
+.status-container {
+    min-height: 3.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
 
-            .security-info h3 {
-                color: #667eea;
-                margin-bottom: 10px;
-                font-size: 1.1rem;
-            }
+#errorText {
+    color: var(--error);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--error-bg);
+    border: 1px solid var(--error-border);
+    animation: shake 0.45s ease-in-out;
+    transition: opacity 0.2s ease;
+    text-align: center;
+}
 
-            .security-info p {
-                color: #7f8c8d;
-                font-size: 0.9rem;
-                line-height: 1.5;
-            }
+#result {
+    color: var(--success);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--success-bg);
+    border: 1px solid var(--success-border);
+    animation: slideIn 0.35s ease-out;
+    word-break: break-all;
+    max-height: 200px;
+    overflow-y: auto;
+    transition: opacity 0.2s ease;
+    font-family: ui-monospace, "Cascadia Code", "Consolas", monospace;
+    text-align: left;
+    line-height: 1.5;
+}
 
-            /* Footer 样式 */
-            .site-footer {
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                border-radius: 15px;
-                padding: 20px 30px;
-                /* margin-top: auto; */
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-                width: 100%;
-                max-width: 500px;
-            }
+.hidden {
+    display: none !important;
+}
 
-            .footer-content {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 15px;
-                font-size: 0.9rem;
-                color: rgba(255, 255, 255, 0.9);
-            }
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-4px);
+    }
+    75% {
+        transform: translateX(4px);
+    }
+}
 
-            .brand {
-                font-weight: 600;
-                color: #fff;
-                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-            }
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-            .divider {
-                color: rgba(255, 255, 255, 0.6);
-                font-weight: 300;
-                user-select: none;
-            }
+.security-info {
+    padding: var(--space-md) var(--space-md);
+    background: linear-gradient(
+        135deg,
+        var(--accent-muted) 0%,
+        rgba(15, 23, 42, 0.04) 100%
+    );
+    border-radius: var(--radius-md);
+    border: 1px solid var(--accent-border);
+    border-left-width: 4px;
+    border-left-color: var(--accent);
+}
 
-            .github-link {
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                color: rgba(255, 255, 255, 0.9);
-                text-decoration: none;
-                padding: 8px 12px;
-                border-radius: 8px;
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                transition: all 0.3s ease;
-                font-size: 0.85rem;
-            }
+.security-info h3 {
+    color: var(--text);
+    margin-bottom: 6px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+}
 
-            .github-link:hover {
-                background: rgba(255, 255, 255, 0.2);
-                border-color: rgba(255, 255, 255, 0.3);
-                transform: translateY(-1px);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-                color: #fff;
-            }
+.security-info h3::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-top: -2px;
+}
 
-            .github-icon {
-                width: 16px;
-                height: 16px;
-                transition: transform 0.2s ease;
-            }
+.security-info p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.55;
+}
 
-            .github-link:hover .github-icon {
-                transform: scale(1.1);
-            }
+.site-footer {
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
 
-            .github-text {
-                font-weight: 500;
-            }
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 14px;
+    font-size: 0.8125rem;
+    color: rgba(226, 232, 240, 0.88);
+}
 
-            .powered-by {
-                color: rgba(255, 255, 255, 0.8);
-                font-size: 0.85rem;
-                font-style: italic;
-            }
+.brand {
+    font-weight: 600;
+    color: #f1f5f9;
+}
 
-            @media (max-width: 600px) {
-                .decrypt-container {
-                    padding: 30px 20px;
-                    margin: 10px;
-                }
+.divider {
+    color: rgba(148, 163, 184, 0.45);
+    font-weight: 300;
+    user-select: none;
+}
 
-                h1 {
-                    font-size: 1.6rem;
-                }
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(226, 232, 240, 0.95);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    font-size: inherit;
+}
 
-                .site-footer {
-                    padding: 15px 20px;
-                    margin: 10px;
-                }
+.github-link:hover {
+    background: rgba(45, 212, 191, 0.12);
+    border-color: var(--accent-border);
+    color: #fff;
+    transform: translateY(-1px);
+}
 
-                .footer-content {
-                    gap: 10px;
-                    font-size: 0.8rem;
-                }
+.github-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
 
-                .github-link {
-                    padding: 6px 10px;
-                    font-size: 0.8rem;
-                }
+.github-link:hover .github-icon {
+    transform: scale(1.08);
+}
 
-                .github-icon {
-                    width: 14px;
-                    height: 14px;
-                }
+.github-text {
+    font-weight: 500;
+}
 
-                .powered-by {
-                    font-size: 0.75rem;
-                }
-            }
+.powered-by {
+    color: rgba(148, 163, 184, 0.9);
+    font-size: 0.75rem;
+    font-style: italic;
+}
 
-            @media (max-width: 480px) {
-                .footer-content {
-                    flex-direction: column;
-                    gap: 8px;
-                    text-align: center;
-                }
+@media (max-width: 600px) {
+    .decrypt-container {
+        padding: var(--space-lg) var(--space-md);
+    }
 
-                .divider {
-                    display: none;
-                }
-            }
+    .site-footer {
+        padding: 12px 14px;
+    }
+
+    .footer-content {
+        gap: 10px;
+        font-size: 0.75rem;
+    }
+
+    .github-link {
+        padding: 6px 10px;
+    }
+
+    .github-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .powered-by {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+
+    .divider {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lock-icon {
+        animation: none;
+    }
+
+    #errorText,
+    #result {
+        animation: none;
+    }
+}
