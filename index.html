@@ -15,31 +15,36 @@
             href="./css.css" />
     </head>
     <body>
-        <div class="decrypt-container">
-            <div class="lock-icon">🔐</div>
-            <h1>FinalShell 密码解密</h1>
+        <main class="page-shell">
+            <div class="decrypt-container">
+                <header class="card-header">
+                    <div class="lock-icon" aria-hidden="true">🔐</div>
+                    <h1>FinalShell 密码解密</h1>
+                    <p class="card-subtitle">本地解密，密码不会上传服务器</p>
+                </header>
 
-            <input
-                id="passwordInput"
-                type="password"
-                placeholder="请输入解密密码"
-                oninput="handlePasswordInput()"
-                spellcheck="false"
-                autocomplete="off" />
+                <label class="sr-only" for="passwordInput">解密密码</label>
+                <input
+                    id="passwordInput"
+                    type="password"
+                    placeholder="粘贴或输入密文以解密"
+                    oninput="handlePasswordInput()"
+                    spellcheck="false"
+                    autocomplete="off" />
 
-            <div class="status-container">
-                <div id="errorText"></div>
-                <div id="result"></div>
+                <div class="status-container" role="status" aria-live="polite">
+                    <div id="errorText"></div>
+                    <div id="result"></div>
+                </div>
+
+                <div class="security-info">
+                    <h3>安全说明</h3>
+                    <p>所有解密均在浏览器内完成，不会离开本机。</p>
+                </div>
             </div>
 
-            <div class="security-info">
-                <h3>🔐 安全说明</h3>
-                <p>所有解密操作都在您的浏览器本地进行。</p>
-            </div>
-        </div>
-
-        <footer class="site-footer">
-            <div class="footer-content">
+            <footer class="site-footer">
+                <div class="footer-content">
                 <span class="brand">© WishMeLz.Design</span>
 
                 <span
@@ -67,7 +72,8 @@
                 </a>
 
                 <span class="powered-by">Powered by ITSSE.CN</span>
-            </div>
-        </footer>
+                </div>
+            </footer>
+        </main>
     </body>
 </html>
